@@ -1,6 +1,7 @@
 import 'package:ebook_app/models/Book.dart';
 import 'package:ebook_app/screens/addBookPage.dart';
 import 'package:ebook_app/screens/detailsPage.dart';
+import 'package:ebook_app/screens/settingsPage.dart';
 import 'package:ebook_app/screens/updateBookPage.dart';
 import 'package:ebook_app/services/BookService.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String name = "Leila";
-
   List<Book> _books = [];
   List<Book> _filteredBooks = [];
 
@@ -103,22 +102,26 @@ class _HomePageState extends State<HomePage> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: size.width * 0.05,
-                                  ),
-                                  child: FaIcon(
-                                    //notifications
-                                    FontAwesomeIcons.gear,
-                                    size: size.height * 0.03,
-                                    color: isDarkMode
-                                        ? Colors.white
-                                        : Colors.black,
-                                  ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SettingsPage()),
+                                );
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: size.width * 0.05,
                                 ),
-                              ],
+                                child: FaIcon(
+                                  //notifications
+                                  FontAwesomeIcons.gear,
+                                  size: size.height * 0.03,
+                                  color:
+                                      isDarkMode ? Colors.white : Colors.black,
+                                ),
+                              ),
                             ),
                           ],
                         ),
