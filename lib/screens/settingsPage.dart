@@ -1,4 +1,6 @@
+import 'package:ebook_app/Providers/themeProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -8,13 +10,11 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool _darkModeEnabled = false; // Track dark mode state
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    var brightness = MediaQuery.of(context).platformBrightness;
-    bool isDarkMode = brightness == Brightness.dark;
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    bool isDarkMode = themeProvider.isDarkMode;
 
     return Scaffold(
       appBar: AppBar(
@@ -47,13 +47,14 @@ class _SettingsPageState extends State<SettingsPage> {
                       color: isDarkMode ? Colors.white : Colors.black,
                     ),
                   ),
-                  trailing: Switch(
-                    value: _darkModeEnabled,
-                    onChanged: (value) {
-                      setState(() {
-                        _darkModeEnabled = value;
-                        // TODO: Implement dark mode toggle logic here
-                      });
+                  trailing: Consumer<ThemeProvider>(
+                    builder: (context, themeProvider, child) {
+                      return Switch(
+                        value: themeProvider.isDarkMode,
+                        onChanged: (value) {
+                          themeProvider.setIsDarkMode(value);
+                        },
+                      );
                     },
                   ),
                 ),
@@ -61,7 +62,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 // Add other settings options here
                 ListTile(
                   title: Text(
-                    'Share the app',
+                    'Option 1',
                     style: TextStyle(
                       color: isDarkMode ? Colors.white : Colors.black,
                     ),
@@ -73,7 +74,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Divider(height: 1, thickness: 1),
                 ListTile(
                   title: Text(
-                    'Term and conditions',
+                    'Option 2',
                     style: TextStyle(
                       color: isDarkMode ? Colors.white : Colors.black,
                     ),

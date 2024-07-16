@@ -1,5 +1,7 @@
+import 'package:ebook_app/Providers/themeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:ebook_app/screens/homePage.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,10 +18,13 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Ebook App',
-      home: HomePage(),
+    return ChangeNotifierProvider(
+      create: (_) => ThemeProvider(),
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Ebook App',
+        home: HomePage(),
+      ),
     );
   }
 }

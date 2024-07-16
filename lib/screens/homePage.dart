@@ -1,3 +1,4 @@
+import 'package:ebook_app/Providers/themeProvider.dart';
 import 'package:ebook_app/models/Book.dart';
 import 'package:ebook_app/screens/addBookPage.dart';
 import 'package:ebook_app/screens/detailsPage.dart';
@@ -7,6 +8,7 @@ import 'package:ebook_app/services/BookService.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -56,8 +58,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    var brightness = MediaQuery.of(context).platformBrightness;
-    bool isDarkMode = brightness == Brightness.dark;
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    bool isDarkMode = themeProvider.isDarkMode;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),

@@ -1,8 +1,10 @@
+import 'package:ebook_app/Providers/themeProvider.dart';
 import 'package:ebook_app/screens/homePage.dart';
 import 'package:ebook_app/services/BookService.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ebook_app/models/Book.dart';
+import 'package:provider/provider.dart';
 
 class EditBookPage extends StatefulWidget {
   final Book book;
@@ -81,8 +83,8 @@ class _EditBookPageState extends State<EditBookPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    var brightness = MediaQuery.of(context).platformBrightness;
-    bool isDarkMode = brightness == Brightness.dark;
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    bool isDarkMode = themeProvider.isDarkMode;
 
     InputDecoration _inputDecoration(String label) {
       return InputDecoration(
@@ -222,11 +224,11 @@ class _EditBookPageState extends State<EditBookPage> {
                                   colors: isDarkMode
                                       ? [
                                           Colors.orange,
-                                          Colors.black,
+                                          Colors.orange,
                                         ]
                                       : [
                                           Colors.orange,
-                                          Colors.white,
+                                          Colors.orange,
                                         ],
                                 ),
                               ),
