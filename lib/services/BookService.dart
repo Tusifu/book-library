@@ -87,13 +87,13 @@ CREATE TABLE $tableBooks (
     );
   }
 
-  Future<int> delete(String movieId) async {
+  Future<int> delete(int id) async {
     final db = await instance.database;
 
     return await db.delete(
       tableBooks,
       where: '${BookFields.id} = ?',
-      whereArgs: [movieId],
+      whereArgs: [id],
     );
   }
 

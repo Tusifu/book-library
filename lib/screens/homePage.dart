@@ -1,6 +1,7 @@
 import 'package:ebook_app/models/Book.dart';
 import 'package:ebook_app/screens/addBookPage.dart';
 import 'package:ebook_app/screens/detailsPage.dart';
+import 'package:ebook_app/screens/updateBookPage.dart';
 import 'package:ebook_app/services/BookService.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -95,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Hello, $name!',
+                              'Welcome,',
                               style: GoogleFonts.questrial(
                                 color: Colors.orange,
                                 fontSize: size.height * 0.04,
@@ -110,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   child: FaIcon(
                                     //notifications
-                                    FontAwesomeIcons.bell,
+                                    FontAwesomeIcons.gear,
                                     size: size.height * 0.03,
                                     color: isDarkMode
                                         ? Colors.white
@@ -202,11 +203,7 @@ class _HomePageState extends State<HomePage> {
                         itemBuilder: (context, index) {
                           final book = _filteredBooks[index];
                           return buildVerticalEbook(
-                            book.description!,
-                            book.book_image!,
-                            book.title!,
-                            book.book_author!,
-                            double.parse(book.rating!),
+                            book,
                             size,
                             isDarkMode,
                           );
@@ -223,8 +220,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buildVerticalEbook(String description, String imageURL, String title,
-      String author, double rating, size, isDarkMode) {
+  Widget buildVerticalEbook(Book book, size, isDarkMode) {
     return InkWell(
       onTap: () {
         //navigate to details page
@@ -232,11 +228,11 @@ class _HomePageState extends State<HomePage> {
           context,
           MaterialPageRoute(
             builder: (context) => DetailsPage(
-              imageURL: imageURL,
-              title: title,
-              author: author,
-              rating: rating,
-              description: description,
+              imageURL: book.book_image!,
+              title: book.title!,
+              author: book.book_author!,
+              rating: double.parse(book.rating!),
+              description: book.description!,
             ),
           ),
         );
@@ -256,7 +252,7 @@ class _HomePageState extends State<HomePage> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.network(
-                    imageURL,
+                    book.book_image!,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -273,7 +269,7 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(
                         width: size.width * 0.6,
                         child: Text(
-                          title,
+                          book.title!,
                           softWrap: true,
                           style: GoogleFonts.questrial(
                             color: isDarkMode ? Colors.white : Colors.black,
@@ -283,39 +279,73 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Text(
-                        author,
+                        book.book_author!,
                         style: GoogleFonts.questrial(
                           color: isDarkMode ? Colors.white38 : Colors.black38,
                           fontSize: size.height * 0.02,
                         ),
                       ),
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: size.height * 0.005),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Rating - $rating',
-                              softWrap: true,
-                              style: GoogleFonts.questrial(
-                                color: isDarkMode ? Colors.white : Colors.black,
-                                fontSize: size.height * 0.025,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: size.width * 0.03,
-                              ),
-                              child: FaIcon(
-                                FontAwesomeIcons.solidStar,
-                                color: Colors.yellow,
-                                size: size.height * 0.02,
-                              ),
-                            ),
-                          ],
-                        ),
+                      SizedBox(width: size.width * 0.02),
+                      Row(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      EditBookPage(book: book),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.orange),
+                            child: Text('Update'),
+                          ),
+                          SizedBox(width: size.width * 0.02),
+                          ElevatedButton(
+                            onPressed: () async {
+                              bool? confirm = await showDialog<bool>(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Text('Confirm Deletion'),
+                                  content: Text(
+                                      'Are you sure you want to delete this book?'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(false),
+                                      child: Text('No'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(true),
+                                      child: Text('Yes'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                              if (confirm == true) {
+                                await BooksDatabase.instance.delete(book.id!);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Book deleted successfully!'),
+                                    backgroundColor: Colors.green,
+                                  ),
+                                );
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomePage(),
+                                  ),
+                                );
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red),
+                            child: Text('Delete'),
+                          ),
+                        ],
                       ),
                     ],
                   ),

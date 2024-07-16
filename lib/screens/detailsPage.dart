@@ -182,49 +182,6 @@ class _DetailsPageState extends State<DetailsPage> {
                     ],
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: size.height * 0.01),
-                    child: SizedBox(
-                      height: size.height * 0.07,
-                      width: size.width * 0.8,
-                      child: InkWell(
-                        //todo: add read action
-                        onTap: () => print('Read'),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(60.0),
-                            gradient: LinearGradient(
-                              stops: const [0.4, 2],
-                              begin: Alignment.centerRight,
-                              end: Alignment.centerLeft,
-                              colors: isDarkMode
-                                  ? [
-                                      Colors.orange,
-                                      Colors.black,
-                                    ]
-                                  : [
-                                      Colors.orange,
-                                      Colors.white,
-                                    ],
-                            ),
-                          ),
-                          child: Align(
-                            child: Text(
-                              'Read',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: size.height * 0.02,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
