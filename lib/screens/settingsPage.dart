@@ -50,6 +50,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   trailing: Consumer<ThemeProvider>(
                     builder: (context, themeProvider, child) {
                       return Switch(
+                        activeTrackColor: Colors.orange,
+                        activeColor: Colors.white,
                         value: themeProvider.isDarkMode,
                         onChanged: (value) {
                           themeProvider.setIsDarkMode(value);
@@ -62,7 +64,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 // Add other settings options here
                 ListTile(
                   title: Text(
-                    'Option 1',
+                    'Terms & conditions',
                     style: TextStyle(
                       color: isDarkMode ? Colors.white : Colors.black,
                     ),
@@ -74,7 +76,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 Divider(height: 1, thickness: 1),
                 ListTile(
                   title: Text(
-                    'Option 2',
+                    'Share the App',
                     style: TextStyle(
                       color: isDarkMode ? Colors.white : Colors.black,
                     ),
