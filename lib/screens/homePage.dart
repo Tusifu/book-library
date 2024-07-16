@@ -1,7 +1,7 @@
 import 'package:ebook_app/models/Book.dart';
 import 'package:ebook_app/screens/addBookPage.dart';
 import 'package:ebook_app/screens/detailsPage.dart';
-import 'package:ebook_app/services/FavoriteService.dart';
+import 'package:ebook_app/services/BookService.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,8 +15,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String name = "Leila";
-  String avatarURL =
-      'https://image.freepik.com/free-photo/pleasant-looking-serious-man-stands-profile-has-confident-expression-wears-casual-white-t-shirt_273609-16959.jpg';
 
   List<Book> _books = [];
   List<Book> _filteredBooks = [];
@@ -188,7 +186,7 @@ class _HomePageState extends State<HomePage> {
                           vertical: size.height * 0.01,
                         ),
                         child: Text(
-                          'Best Rating',
+                          'Books List',
                           style: GoogleFonts.questrial(
                             color: isDarkMode ? Colors.white : Colors.black,
                             fontSize: size.height * 0.03,
@@ -204,6 +202,7 @@ class _HomePageState extends State<HomePage> {
                         itemBuilder: (context, index) {
                           final book = _filteredBooks[index];
                           return buildVerticalEbook(
+                            book.description!,
                             book.book_image!,
                             book.title!,
                             book.book_author!,
@@ -224,8 +223,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buildVerticalEbook(String imageURL, String title, String author,
-      double rating, size, isDarkMode) {
+  Widget buildVerticalEbook(String description, String imageURL, String title,
+      String author, double rating, size, isDarkMode) {
     return InkWell(
       onTap: () {
         //navigate to details page
@@ -237,6 +236,7 @@ class _HomePageState extends State<HomePage> {
               title: title,
               author: author,
               rating: rating,
+              description: description,
             ),
           ),
         );

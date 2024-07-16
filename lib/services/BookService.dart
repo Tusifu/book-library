@@ -38,7 +38,7 @@ CREATE TABLE $tableBooks (
   ${BookFields.title} $textType,
   ${BookFields.book_author} $textType,
   ${BookFields.rating} $textType,
-  ${BookFields.book_image} $textType),
+  ${BookFields.book_image} $textType,
   ${BookFields.description} $textType)
 ''');
   }

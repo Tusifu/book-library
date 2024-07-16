@@ -9,6 +9,7 @@ class DetailsPage extends StatefulWidget {
   final String title;
   final String author;
   final double rating;
+  final String description;
 
   const DetailsPage({
     Key? key,
@@ -16,6 +17,7 @@ class DetailsPage extends StatefulWidget {
     required this.title,
     required this.author,
     required this.rating,
+    required this.description,
   }) : super(key: key);
 
   @override
@@ -168,7 +170,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           child: Text(
                             //TODO: add ebook description
                             //ebook description
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae elementum odio, at convallis est. Curabitur elit sapien, consectetur quis eleifend non, tempus id justo. Etiam facilisis magna quis nisl tempor blandit. Sed nec dapibus purus.",
+                            widget.description,
                             style: GoogleFonts.poppins(
                               color:
                                   isDarkMode ? Colors.white54 : Colors.black54,
