@@ -171,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                                         fontSize: size.height * 0.02,
                                       ),
                                       border: InputBorder.none,
-                                      hintText: 'Search Ebook',
+                                      hintText: 'Search in book library',
                                     ),
                                     style: GoogleFonts.questrial(
                                       color: isDarkMode
